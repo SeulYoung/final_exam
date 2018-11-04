@@ -54,12 +54,14 @@ def registration(request):
         if password != password_confirmation:
             return render(request, 'registration.html', {'registration_error': 'password mismatch.'})
 
-        try:
-            MyUser.objects.create_user(email=email, username=username, password=password)
-        except IntegrityError:
+        info = MyUser.objects.filter(email=email).first()
+        if info is not None:
             return render(request, 'registration.html', {'registration_error': 'email already taken.'})
-        '''except Exception:
-            return render(request, 'registration.html', {'registration_error': 'username already taken.'})'''
+        info = MyUser.objects.filter(username=username).first()
+        if info is not None:
+            return render(request, 'registration.html', {'registration_error': 'username already taken.'})
+        MyUser.objects.create_user(email=email, username=username, password=password)
+
         return redirect('/login.html')
     return render(request, 'registration.html')
 
@@ -67,9 +69,7 @@ def registration(request):
 def profile(request):
     if request.user.is_authenticated:
         info = MyUser.objects.filter(email=request.user.email).first()
-        return render(request, 'profile.html', {'email': info.email,
-                                                'username': info.username,
-                                                'password': info.password})
+        return render(request, 'profile.html', {'email': info.email, 'username': info.username})
     return redirect('/login.html')
 
 

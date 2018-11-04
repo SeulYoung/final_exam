@@ -9,7 +9,7 @@
 {% block main %}
 <form class="innerBox" action="" method="post" onsubmit="return register_check()">
     <br />{% csrf_token %}<br />
-    <label class="aleStyle" id="error">{{ register_error }}</label>
+    <label class="aleStyle" id="error">{{ registration_error }}</label>
 
     <label class="lblStyle">Email Address</label>
     <input class="iptStyle" id="email" name="email" type="email" value="" />

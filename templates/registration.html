@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Registration{% endblock %}
+
+{% block js %}
+<script src="/static/js/registration.js"></script>
+{% endblock %}
+
+{% block main %}
+<form class="innerBox" action="" method="post" onsubmit="return register_check()">
+    <br />{% csrf_token %}<br />
+    <label class="aleStyle" id="error">{{ register_error }}</label>
+
+    <label class="lblStyle">Email Address</label>
+    <input class="iptStyle" id="email" name="email" type="email" value="" />
+    <label class="lblStyle">Username</label>
+    <input class="iptStyle" id="username" name="username" type="text" value="" />
+    <label class="lblStyle">Password</label>
+    <input class="iptStyle" id="password" name="password" type="password" value="" />
+    <label class="lblStyle">Password confirmation</label>
+    <input class="iptStyle" id="password_confirmation" name="password_confirmation" type="password" value="" />
+    <div>
+        <a href="/login.html">Back to login</a>
+        <input class="Btn" id="registerBtn" type="submit" value="Register" />
+    </div>
+</form>
+{% endblock %}

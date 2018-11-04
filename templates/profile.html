@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block main %}
+<div class="innerBox">
+    <br />{% csrf_token %}<br />
+    <label class="lblStyle">Email: </label>
+    <label class="lblStyle">{{ email }}</label>
+    <label class="lblStyle">Username: </label>
+    <label class="lblStyle">{{ username }}</label>
+    <label class="lblStyle">Password: </label>
+    <label class="lblStyle">{{ password }}</label>
+    <a href="/logout">
+        <input class="Btn" id="LogoutBtn" type="button" value="Logout" />
+    </a>
+</div>
+{% endblock %}

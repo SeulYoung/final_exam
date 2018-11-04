@@ -16,8 +16,8 @@ class MyUserManager(BaseUserManager):
             raise ValueError('Password must not be empty')
 
         user = self.model(email=self.normalize_email(email),
-                          username=username,
-                          password=password)
+                          username=username)
+        user.set_password(password)
 
         user.save(using=self._db)
         return user

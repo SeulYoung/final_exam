@@ -23,14 +23,13 @@ def login(request):
         info = MyUser.objects.filter(email=email).first()
         if info is None:
             return render(request, 'login.html', {'login_error': 'email not found.'})
-        if info.password != password:
-            return render(request, 'login.html', {'login_error': 'password is invalid.'})
-
         user = auth.authenticate(email=email, password=password)
         if user is not None:
             if user.is_active:
                 auth.login(request, user)
                 return redirect('/profile.html')
+        else:
+            return render(request, 'login.html', {'login_error': 'password is invalid.'})
 
     return render(request, 'login.html')
 

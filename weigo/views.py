@@ -9,7 +9,7 @@ from weigo.models import MyUser
 def landing(request):
     if request.user.is_authenticated:
         return redirect('/profile.html')
-    return redirect('/login.html')
+    return render(request, 'index.html')
 
 
 def login(request):
@@ -109,4 +109,4 @@ def password_update(request):
 
 def logout(request):
     auth.logout(request)
-    return redirect('/login.html')
+    return redirect('/index.html')

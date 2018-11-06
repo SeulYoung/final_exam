@@ -1,27 +1,40 @@
-{% extends 'base.html' %}
-
-{% block title %}Registration{% endblock %}
-
-{% block js %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>registration</title>
+<link href="/static/css/style2.css" rel='stylesheet' type='text/css' />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="App Sign in Form,Login Forms,Sign up Forms,Registration Forms,News latter Forms,Elements"./>
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <script src="/static/js/registration.js"></script>
-{% endblock %}
 
-{% block main %}
-<form class="innerBox" action="" method="post" onsubmit="return register_check()">
-    <br />{% csrf_token %}<br />
-    <label class="aleStyle" id="error">{{ registration_error }}</label>
 
-    <label class="lblStyle">Email Address</label>
-    <input class="iptStyle" id="email" name="email" type="email" value="" />
-    <label class="lblStyle">Username</label>
-    <input class="iptStyle" id="username" name="username" type="text" value="" />
-    <label class="lblStyle">Password</label>
-    <input class="iptStyle" id="password" name="password" type="password" value="" />
-    <label class="lblStyle">Password confirmation</label>
-    <input class="iptStyle" id="password_confirmation" name="password_confirmation" type="password" value="" />
-    <div>
-        <a href="/login.html">Back to login</a>
-        <input class="Btn" id="registerBtn" type="submit" value="Register" />
-    </div>
-</form>
-{% endblock %}
+</head>
+<body>
+<h1> Registration Form</h1>
+		<div class="app-cam">
+			<div class="cam"><img src="/static/img/cam.png" class="img-responsive" alt="" /></div>
+
+			<form class="innerBox" action="" method="post" onsubmit="return register_check()">
+                <br style="color:red"/>{% csrf_token %}<br />
+                <label class="aleStyle" style="color:red" id="error">{{ registration_error }}</label>
+
+                <input type="text" class="text" id="email" name="email" value="E-mail address" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'E-mail address';}" >
+				<input type="text" class="text" id="username" name="username" type="text" value="Username" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'E-mail address';}" >
+                <input type="password" id="password" name="password" value="Password" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password';}">
+                <input type="password" id="password_confirmation" name="password_confirmation" value="Password" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password';}">
+                <div class="submit"><input type="submit"  value="Register" ></div>
+				</form>
+
+                <div class="clear"></div>
+
+				<div class="new">
+					<p><a href="/login.html">Back to login</a></p>
+					<div class="clear"></div>
+				</div>
+			</form>
+		</div>
+
+</body>
+</html>

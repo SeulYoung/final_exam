@@ -109,4 +109,4 @@ def password_update(request):
 
 def logout(request):
     auth.logout(request)
-    return redirect('/index.html')
+    return redirect('landing')

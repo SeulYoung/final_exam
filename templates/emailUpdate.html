@@ -18,8 +18,8 @@
 
 			<form class="innerBox" action="" method="post" onsubmit="return email_check()">
                 <br style="color:red"/>{% csrf_token %}<br />
-                <label class="aleStyle"  style="color:red" id="error">{{ login_error }}</label>
-                <input type="text" class="text" id="email" name="email" value="New E-mail address" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'E-mail address';}" >
+                <label class="aleStyle"  style="color:red" id="error">{{ email_error }}</label>
+                <input type="text" class="text" id="email" name="email" placeholder="New Email Address" />
 				 <div class="submit"><input id="confirmBtn"  type="submit"  value="Confirm" ></div>
 				</form>
 

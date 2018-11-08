@@ -20,8 +20,8 @@
 
                 <br style="color:red"/>{% csrf_token %}<br />
                 <label class="aleStyle"  style="color:red" id="error">{{ login_error }}</label>
-                <input type="text" class="text" id="email" name="email" value="E-mail address" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'E-mail address';}" >
-				<input type="password" id="password" name="password" value="Password" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password';}">
+                <input type="text" class="text" id="email" name="email" placeholder="Email Address" />
+				<input type="password" id="password" name="password" placeholder="Password" />
                 <div class="submit"><input type="submit" value="Login" ></div>
 				</form>
 

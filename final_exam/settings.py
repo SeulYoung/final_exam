@@ -24,7 +24,7 @@ SECRET_KEY = '=s1s*aimxey52*nr!wkl-y7oa-y1ijw9lk4ag3*8*gg)8&p&7f'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -122,3 +122,5 @@ STATICFILES_DIRS = (
     ('js', os.path.join(STATIC_ROOT, 'js')),
     ('fonts', os.path.join(STATIC_ROOT, 'fonts')),
 )
+
+AUTHENTICATION_BACKENDS = ('weigo.views.MyBackend',)

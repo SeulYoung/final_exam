@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<!-- Head -->
+<head>
+
+    <title>Weibo Dynamic</title>
+
+    <!-- Meta-Tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="keywords" content="">
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    } </script>
+    <!-- //Meta-Tags -->
+
+
+    <!-- Bootstrap-CSS -->
+    <link rel="stylesheet" href="/static/css/bootstrap5.css" type="text/css" media="all">
+    <!-- Index-Page-CSS -->
+    <link rel="stylesheet" href="/static/css/style5.css" type="text/css" media="all">
+
+
+</head>
+<!-- //Head -->
+
+
+<!-- Body -->
+<body>
+
+
+<!-- Header -->
+<div class="agileheader" id="agileitshome">
+
+    <!-- Navigation -->
+    <div class="w3lsnavigation">
+        <nav class="navbar navbar-default agilehovereffect wthreehovereffect">
+            <div class="navbar-header navbar-left">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+            </div>
+
+            <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
+                <nav class="link-effect-2" id="link-effect-2">
+                    <ul class="nav navbar-nav">
+                        {#							<li><a class="scroll" href="#w3lsaboutaits"><span>ABOUT</span></a></li>#}
+                        {#							<li><a class="scroll" href="#wthreelocationsaits"><span>LOCATIONS</span></a></li>#}
+                        {#							<li><a class="scroll" href="#agilepackagesw3l"><span>PACKAGES</span></a></li>#}
+                        <li><a class="scroll" href="/dynamic.html"><span style="font-size: 30px">SEND</span></a></li>
+                        <li><a class="scroll" href="/myDynamic.html"><span style="font-size: 30px">MY DYNAMIC</span></a>
+                        </li>
+                        <li><a class="scroll" href="#"><span></span></a></li>
+                        <li><a class="scroll" href="/circle.html"><span style="font-size: 30px">CIRCLE</span></a></li>
+                        <li><a class="scroll" href="/profile.html"><span style="font-size: 30px">BACK</span></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </nav>
+    </div>
+    <!-- //Navigation -->
+
+    <!-- Slider -->
+    <div class="slider">
+        <ul class="rslides" id="slider">
+            <li class="first-slide w3ls">
+                <img src="/static/img/slide-1.jpg" alt="Odyssey">
+                <div class="wthreexperience">
+                    <div id="animated-example" class="animated fadeIn"></div>
+                    <button onclick="myFunction()">Reload page</button>
+                </div>
+            </li>
+            <li class="second-slide aits">
+                <img src="/static/img/slide-2.jpg" alt="Odyssey">
+                <div class="wthreexperience">
+                    <div id="animated-example1" class="animated fadeIn"></div>
+                    <button onclick="myFunction()">Reload page</button>
+                </div>
+            </li>
+            <li class="third-slide w3-agileits">
+                <img src="/static/img/slide-3.jpg" alt="Odyssey">
+                <div class="wthreexperience">
+                    <div id="animated-example2" class="animated fadeIn"></div>
+                    <button onclick="myFunction()">Reload page</button>
+                </div>
+            </li>
+            <li class="fourth-slide agileinfo">
+                <img src="/static/img/slide-4.jpg" alt="Odyssey">
+                <div class="wthreexperience">
+                    <div id="animated-example3" class="animated fadeIn"></div>
+                    <button onclick="myFunction()">Reload page</button>
+                </div>
+            </li>
+            <li class="fifth-slide wthree">
+                <img src="/static/img/slide-5.jpg" alt="Odyssey">
+                <div class="wthreexperience">
+                    <div id="animated-example4" class="animated fadeIn"></div>
+                    <button onclick="myFunction()">Reload page</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <!-- //Slider -->
+
+</div>
+<!-- //Header -->
+
+
+<!-- Contact -->
+<div class="agilecontactw3ls" id="agilecontactw3ls">
+    <div class="container">
+        <h3>My Dynamic</h3>
+        {% for line in data %}
+            <div class="col-md-6 agilecontactw3ls-grid agilecontactw3ls-grid-1">
+                <input type="text" Name="author" value="{{ line.author }}" required="" readonly="true"
+                       style="color:white">
+                <input type="text" Name="postData" value="{{ line.postData }}" required="" readonly="true"
+                       style="color:white">
+                <input type="text" Name="likes" value="Likes: {{ line.likes }}" required="" readonly="true"
+                       style="color:white">
+            </div>
+            <div class="col-md-6 agilecontactw3ls-grid agilecontactw3ls-grid-2">
+                <textarea name="content" required="" readonly="true" style="color:white">{{ line.content }}</textarea>
+                <div class="send-button">
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        {% endfor %}
+    </div>
+</div>
+<!-- //Contact -->
+
+<!-- Default-JavaScript -->
+<script type="text/javascript" src="/static/js/jquery-2.1.4.min.js"></script>
+
+
+<script src="/static/js/responsiveslides.min.js"></script>
+<script>
+    $(function () {
+        $("#slider").responsiveSlides({
+            // auto: true,
+            nav: true,
+            speed: 2000,
+            namespace: "callbacks",
+            pager: true,
+        });
+    });
+</script>
+<!-- //Responsive-Slider-JavaScript -->
+
+
+<!-- Review-Slider-JavaScript -->
+<script src="/static/js/main5.js"></script>
+<!-- //Review-Slider-JavaScript -->
+
+
+</body>
+<!-- //Body -->
+
+
+</html>

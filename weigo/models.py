@@ -69,3 +69,10 @@ class MyUser(AbstractBaseUser):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_admin
+
+
+class WeiboData(models.Model):
+    author = models.CharField(max_length=100)
+    content = models.CharField(max_length=300)
+    likes = models.IntegerField(default=0)
+    postData = models.DateTimeField(auto_now_add=True)

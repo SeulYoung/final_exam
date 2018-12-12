@@ -1,9 +1,26 @@
 import re
-
 from django.contrib import auth
 from django.shortcuts import render, redirect
+from django.db.models import Q, F
+from django.contrib.auth.backends import ModelBackend
+from django.views.decorators.csrf import csrf_protect
 
-from weigo.models import MyUser
+from weigo import models
+from weigo.models import MyUser, WeiboData
+
+data_list = [
+    {'author': "jack", "content": "abc", "postData": "aaa"}
+]
+
+
+class MyBackend(ModelBackend):
+    def authenticate(self, request, username=None, password=None, **kwargs):
+        try:
+            user = MyUser.objects.get(Q(username=username) | Q(email=username))
+            if user.check_password(password):
+                return user
+        except Exception as e:
+            return None
 
 
 def landing(request):
@@ -19,10 +36,10 @@ def login(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
 
-        info = MyUser.objects.filter(email=email).first()
+        info = MyUser.objects.filter(Q(email=email) | Q(username=email)).first()
         if info is None:
             return render(request, 'login.html', {'login_error': 'email not found.'})
-        user = auth.authenticate(email=email, password=password)
+        user = auth.authenticate(username=email, password=password)
         if user is not None:
             if user.is_active:
                 auth.login(request, user)
@@ -63,6 +80,37 @@ def registration(request):
 
         return redirect('/login.html')
     return render(request, 'registration.html')
+
+
+@csrf_protect
+def dynamic(request):
+    if request.method == "POST":
+        author = request.POST.get('author')
+        content = request.POST.get('content')
+        likes = 0
+        WeiboData.objects.create(author=author, content=content, likes=likes)
+        data_list = models.WeiboData.objects.all().order_by('-postData')
+        return render(request, 'circle.html', {'data': data_list})
+
+    info = MyUser.objects.filter(email=request.user.email).first()
+    return render(request, 'dynamic.html', {'email': info.email, 'username': info.username})
+
+
+def myDynamic(request):
+    data_list = models.WeiboData.objects.filter(author=request.user.username).order_by('-postData')
+    info = MyUser.objects.filter(email=request.user.email).first()
+    return render(request, 'myDynamic.html', {'data': data_list})
+
+
+def circle(request):
+    if request.method == "POST":
+        author = request.POST.get('author')
+        postData = request.POST.get('postData')
+        likes = request.POST.get('likes')
+        WeiboData.objects.filter(Q(author=author) & Q(postData=postData)).update(likes=F('likes') + 1)
+
+    data_list = models.WeiboData.objects.all().order_by('-postData')
+    return render(request, 'circle.html', {'data': data_list})
 
 
 def profile(request):

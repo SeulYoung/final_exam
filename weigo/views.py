@@ -84,6 +84,8 @@ def registration(request):
 
 @csrf_protect
 def dynamic(request):
+    if not request.user.is_authenticated:
+        return redirect('/login.html')
     if request.method == "POST":
         author = request.POST.get('author')
         content = request.POST.get('content')
@@ -97,12 +99,16 @@ def dynamic(request):
 
 
 def myDynamic(request):
+    if not request.user.is_authenticated:
+        return redirect('/login.html')
     data_list = models.WeiboData.objects.filter(author=request.user.username).order_by('-postData')
     info = MyUser.objects.filter(email=request.user.email).first()
     return render(request, 'myDynamic.html', {'data': data_list})
 
 
 def circle(request):
+    if not request.user.is_authenticated:
+        return redirect('/login.html')
     if request.method == "POST":
         author = request.POST.get('author')
         postData = request.POST.get('postData')
@@ -117,10 +123,13 @@ def profile(request):
     if request.user.is_authenticated:
         info = MyUser.objects.filter(email=request.user.email).first()
         return render(request, 'profile.html', {'email': info.email, 'username': info.username})
+
     return redirect('/login.html')
 
 
 def email_update(request):
+    if not request.user.is_authenticated:
+        return redirect('/login.html')
     if request.method == "POST":
         email = request.POST.get('email')
         email_valid = r'^[0-9a-zA-Z\_\-]+(\.[0-9a-zA-Z\_\-]+)*@[0-9a-zA-Z]+(\.[0-9a-zA-Z]+){1,}$'
@@ -137,6 +146,8 @@ def email_update(request):
 
 
 def password_update(request):
+    if not request.user.is_authenticated:
+        return redirect('/login.html')
     if request.method == "POST":
         old_password = request.POST.get('old_password')
         password = request.POST.get('password')

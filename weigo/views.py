@@ -59,10 +59,10 @@ def registration(request):
         password = request.POST.get('password')
         password_confirmation = request.POST.get('password_confirmation')
 
-        email_valid = r'^[0-9a-zA-Z\_\-]+(\.[0-9a-zA-Z\_\-]+)*@[0-9a-zA-Z]+(\.[0-9a-zA-Z]+){1,}$'
+        email_valid = r'^[0-9a-z\_\-]+(\.[0-9a-z\_\-]+)*@[0-9a-z]+(\.[0-9a-z]+){1,}$'
         if not re.match(email_valid, email):
             return render(request, 'registration.html', {'registration_error': 'enter a valid email address.'})
-        username_valid = r'^[a-z]+$'
+        username_valid = r'^[a-z0-9\-\_]+$'
         if not re.match(username_valid, username):
             return render(request, 'registration.html', {'registration_error': 'username has illegal characters.'})
         if len(password) < 6:

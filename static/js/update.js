@@ -1,6 +1,6 @@
 function email_check() {
     let email = document.getElementById("email").value;
-    let email_valid = /^[0-9a-zA-Z\_\-]+(\.[0-9a-zA-Z\_\-]+)*@[0-9a-zA-Z]+(\.[0-9a-zA-Z]+){1,}$/;
+    let email_valid = /^[0-9a-z\_\-]+(\.[0-9a-z\_\-]+)*@[0-9a-z]+(\.[0-9a-z]+){1,}$/;
 
     if (!email_valid.test(email)) {
         document.getElementById('error').innerHTML = 'enter a valid email address.';

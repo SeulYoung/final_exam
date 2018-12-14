@@ -11,7 +11,7 @@ function register_check() {
         return false;
     }
     if (!username_valid.test(username)) {
-        document.getElementById('error').innerHTML = 'username has illegal characters.';
+        document.getElementById('error').innerHTML = 'username has illegal characters(a-z|0-9|-|_).';
         return false;
     }
     if (password.length < 6) {

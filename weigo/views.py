@@ -38,7 +38,7 @@ def login(request):
 
         info = MyUser.objects.filter(Q(email=email) | Q(username=email)).first()
         if info is None:
-            return render(request, 'login.html', {'login_error': 'email not found.'})
+            return render(request, 'login.html', {'login_error': 'user not found.'})
         user = auth.authenticate(username=email, password=password)
         if user is not None:
             if user.is_active:

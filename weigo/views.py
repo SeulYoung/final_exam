@@ -1,12 +1,11 @@
 from django.contrib import auth
 from django.shortcuts import render, redirect
-from django.db.models import Q, F
+from django.db.models import F
 from django.contrib.auth.backends import ModelBackend
 from django.views.decorators.csrf import csrf_protect
 
 from weigo import models
 from weigo.forms import *
-from weigo.models import MyUser, WeiboData
 
 data_list = [
     {'author': "jack", "content": "abc", "postData": "aaa"}
@@ -73,7 +72,7 @@ def dynamic(request):
         author = request.POST.get('author')
         content = request.POST.get('content')
         likes = 0
-        WeiboData.objects.create(author=author, content=content, likes=likes)
+        models.WeiboData.objects.create(author=author, content=content, likes=likes)
         data_list = models.WeiboData.objects.all().order_by('-postData')
         return render(request, 'circle.html', {'data': data_list})
 
@@ -96,7 +95,7 @@ def circle(request):
         author = request.POST.get('author')
         postData = request.POST.get('postData')
         likes = request.POST.get('likes')
-        WeiboData.objects.filter(Q(author=author) & Q(postData=postData)).update(likes=F('likes') + 1)
+        models.WeiboData.objects.filter(Q(author=author) & Q(postData=postData)).update(likes=F('likes') + 1)
 
     data_list = models.WeiboData.objects.all().order_by('-postData')
     return render(request, 'circle.html', {'data': data_list})

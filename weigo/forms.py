@@ -62,10 +62,10 @@ class RegistrationForm(forms.Form):
 
 
 class LoginForm(forms.Form):
-    username = forms.CharField(label='Username', max_length=100)
+    email = forms.CharField(label='Email', max_length=100)
     password = forms.CharField(label='Password', widget=forms.PasswordInput)
 
-    def clean_username(self):
+    def clean_email(self):
         username = self.cleaned_data.get('email')
         filter_result = MyUser.objects.filter(Q(email=username) | Q(username=username)).first()
         if not filter_result:
@@ -91,10 +91,6 @@ class PasswordForm(forms.Form):
     old_password = forms.CharField(label='OldPassword', widget=forms.PasswordInput)
     password1 = forms.CharField(label='Password1', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Password2', widget=forms.PasswordInput)
-
-    def clean_old(self):
-        old_password = self.cleaned_data.get('old_password')
-        return old_password
 
     def clean_password1(self):
         password1 = self.cleaned_data.get('password1')

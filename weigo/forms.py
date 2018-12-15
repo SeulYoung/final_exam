@@ -13,7 +13,7 @@ def email_check(email):
 
 
 def username_check(username):
-    pattern = re.compile(r'^[a-z0-9\-_]+$')
+    pattern = re.compile(r'^[a-z0-9\-_]{3,20}$')
     return re.match(pattern, username)
 
 
@@ -35,14 +35,12 @@ class RegistrationForm(forms.Form):
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
-        if len(username) > 50:
-            raise forms.ValidationError('Username too long.')
         if username_check(username):
             filter_result = User.objects.filter(username=username)
             if len(filter_result) > 0:
                 raise forms.ValidationError('Username already taken.')
         else:
-            raise forms.ValidationError('Username has illegal characters.')
+            raise forms.ValidationError('Username has illegal characters(3 char min and 20 char max).')
         return username
 
     def clean_password1(self):

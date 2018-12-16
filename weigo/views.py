@@ -112,8 +112,9 @@ def circle(request):
     if request.method == "POST":
         author = request.POST.get('author')
         postData = request.POST.get('postData')
+        content = request.POST.get('content')
         likes = request.POST.get('likes')
-        WeiboData.objects.filter(Q(author=author) & Q(postData=postData)).update(likes=F('likes') + 1)
+        WeiboData.objects.filter(Q(author=author) & Q(content=content)).update(likes=F('likes') + 1)
 
     data_list = models.WeiboData.objects.all().order_by('-postData')
     return render(request, 'circle.html', {'data': data_list})

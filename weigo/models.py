@@ -72,7 +72,13 @@ class MyUser(AbstractBaseUser):
 
 
 class WeiboData(models.Model):
+    num = models.AutoField(primary_key=True)
     author = models.CharField(max_length=100)
     content = models.CharField(max_length=300)
     likes = models.IntegerField(default=0)
     postData = models.DateTimeField(auto_now_add=True)
+
+
+class WeiboLike(models.Model):
+    num = models.IntegerField()
+    liker = models.CharField(max_length=100)

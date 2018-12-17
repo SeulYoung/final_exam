@@ -7,10 +7,6 @@ from django.views.decorators.csrf import csrf_protect
 from weigo import models
 from weigo.forms import *
 
-data_list = [
-    {'author': "jack", "content": "abc", "postData": "aaa"}
-]
-
 
 class MyBackend(ModelBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):
@@ -71,8 +67,7 @@ def dynamic(request):
     if request.method == "POST":
         author = request.POST.get('author')
         content = request.POST.get('content')
-        likes = 0
-        models.WeiboData.objects.create(author=author, content=content, likes=likes)
+        models.WeiboData.objects.create(author=author, content=content)
         data_list = models.WeiboData.objects.all().order_by('-postData')
         return render(request, 'circle.html', {'data': data_list})
 
@@ -84,7 +79,6 @@ def myDynamic(request):
     if not request.user.is_authenticated:
         return redirect('/login.html')
     data_list = models.WeiboData.objects.filter(author=request.user.username).order_by('-postData')
-    info = MyUser.objects.filter(email=request.user.email).first()
     return render(request, 'myDynamic.html', {'data': data_list})
 
 
@@ -92,11 +86,10 @@ def circle(request):
     if not request.user.is_authenticated:
         return redirect('/login.html')
     if request.method == "POST":
-        author = request.POST.get('author')
-        postData = request.POST.get('postData')
-        content = request.POST.get('content')
-        likes = request.POST.get('likes')
-        models.WeiboData.objects.filter(Q(author=author) & Q(content=content)).update(likes=F('likes') + 1)
+        num = request.POST.get('num')
+        result = models.WeiboLike.objects.filter(num=num, liker=request.user.username)
+        if not result:
+            models.WeiboData.objects.filter(num=num).update(likes=F('likes') + 1)
 
     data_list = models.WeiboData.objects.all().order_by('-postData')
     return render(request, 'circle.html', {'data': data_list})

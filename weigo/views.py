@@ -20,13 +20,13 @@ class MyBackend(ModelBackend):
 
 def landing(request):
     if request.user.is_authenticated:
-        return redirect('/profile.html')
+        return redirect('/profile')
     return render(request, 'index.html')
 
 
 def login(request):
     if request.user.is_authenticated:
-        return redirect('/profile.html')
+        return redirect('/profile')
     if request.method == "POST":
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -36,7 +36,7 @@ def login(request):
             if user is not None:
                 if user.is_active:
                     auth.login(request, user)
-                    return redirect('/profile.html')
+                    return redirect('/profile')
             else:
                 form.add_error('password', 'Password is invalid.')
     else:
@@ -46,7 +46,7 @@ def login(request):
 
 def registration(request):
     if request.user.is_authenticated:
-        return redirect('/profile.html')
+        return redirect('/profile')
     if request.method == "POST":
         form = RegistrationForm(request.POST)
         if form.is_valid():
@@ -54,7 +54,7 @@ def registration(request):
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
             MyUser.objects.create_user(email=email, username=username, password=password)
-            return redirect('/login.html')
+            return redirect('/login')
     else:
         form = RegistrationForm()
     return render(request, 'registration.html', {'form': form})
@@ -63,13 +63,25 @@ def registration(request):
 @csrf_protect
 def dynamic(request):
     if not request.user.is_authenticated:
-        return redirect('/login.html')
+        return redirect('/login')
     if request.method == "POST":
         author = request.POST.get('author')
         content = request.POST.get('content')
         models.WeiboData.objects.create(author=author, content=content)
         data_list = models.WeiboData.objects.all().order_by('-postData')
-        return render(request, 'circle.html', {'data': data_list})
+        data = []
+        for k in data_list:
+            temp = k.__dict__
+            temp['judge'] = 0
+            temp['follow'] = 0
+            judge = models.WeiboLike.objects.filter(Q(num=k.num) & Q(liker=request.user.username))
+            follow = models.Follow.objects.filter(Q(author=k.author) & Q(follower=request.user.username))
+            if judge:
+                temp['judge'] = 1
+            if follow:
+                temp['follow'] = 1
+            data.append(temp)
+        return render(request, 'circle.html', {'data': data, 'username': request.user.username})
 
     info = MyUser.objects.filter(email=request.user.email).first()
     return render(request, 'dynamic.html', {'email': info.email, 'username': info.username})
@@ -77,14 +89,14 @@ def dynamic(request):
 
 def myDynamic(request):
     if not request.user.is_authenticated:
-        return redirect('/login.html')
+        return redirect('/login')
     data_list = models.WeiboData.objects.filter(author=request.user.username).order_by('-postData')
     return render(request, 'myDynamic.html', {'data': data_list})
 
 
 def circle(request):
     if not request.user.is_authenticated:
-        return redirect('/login.html')
+        return redirect('/login')
     if request.method == "POST":
         if 'like' in request.POST:
             num = request.POST.get('num')
@@ -101,19 +113,37 @@ def circle(request):
                 result[0].delete()
 
     data_list = models.WeiboData.objects.all().order_by('-postData')
-    return render(request, 'circle.html', {'data': data_list})
+    data = []
+    for k in data_list:
+        temp = k.__dict__
+        temp['judge'] = 0
+        temp['follow'] = 0
+        judge = models.WeiboLike.objects.filter(Q(num=k.num) & Q(liker=request.user.username))
+        follow = models.Follow.objects.filter(Q(author=k.author) & Q(follower=request.user.username))
+        if judge:
+            temp['judge'] = 1
+        if follow:
+            temp['follow'] = 1
+        data.append(temp)
+    return render(request, 'circle.html', {'data': data, 'username': request.user.username})
 
 
 def follower(request):
     if not request.user.is_authenticated:
-        return redirect('/login.html')
-    data_list = models.Follow.objects.filter(author=request.user.username)
-    return render(request, 'follower.html', {'data': data_list})
+        return redirect('/login')
+    data_list = models.Follow.objects.filter(follower=request.user.username)
+    return render(request, 'following.html', {'data': data_list})
 
 
 def following(request):
     if not request.user.is_authenticated:
-        return redirect('/login.html')
+        return redirect('/login')
+
+    if request.method == 'POST':
+        author = request.POST.get('author')
+        result = models.Follow.objects.get_or_create(author=author, follower=request.user.username)
+        if not result[1]:
+            result[0].delete()
     data_list = models.WeiboData.objects.filter(follower=request.user.username).order_by('-postData')
     return render(request, 'following.html', {'data': data_list})
 
@@ -123,12 +153,12 @@ def profile(request):
         info = MyUser.objects.filter(email=request.user.email).first()
         return render(request, 'profile.html', {'email': info.email, 'username': info.username})
 
-    return redirect('/login.html')
+    return redirect('/login')
 
 
 def email_update(request):
     if not request.user.is_authenticated:
-        return redirect('/login.html')
+        return redirect('/login')
     if request.method == "POST":
         form = EmailForm(request.POST)
         if form.is_valid():
@@ -142,7 +172,7 @@ def email_update(request):
 
 def password_update(request):
     if not request.user.is_authenticated:
-        return redirect('/login.html')
+        return redirect('/login')
     if request.method == "POST":
         form = PasswordForm(request.POST)
         if form.is_valid():

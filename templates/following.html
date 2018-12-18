@@ -3,7 +3,7 @@
 <!-- Head -->
 <head>
 
-    <title>Weibo Dynamic</title>
+    <title>I Followed</title>
 
     <!-- Meta-Tags -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -53,20 +53,22 @@
             <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
                 <nav class="link-effect-2" id="link-effect-2">
                     <ul class="nav navbar-nav">
-                        <li><a class="scroll" href="/dynamic"><span style="font-size: 30px;color: #0b0b0b">SEND</span></a></li>
+                        <li><a class="scroll" href="/dynamic"><span
+                                style="font-size: 30px;color: #0b0b0b">SEND</span></a></li>
                         <li><a class="scroll" href="/myDynamic"><span style="font-size: 30px;color: #0b0b0b">MY DYNAMIC</span></a>
                         </li>
                         <li><a class="scroll" href="#"><span></span></a></li>
-                        <li><a class="scroll" href="/circle"><span style="font-size: 30px;color: #0b0b0b">CIRCLE</span></a></li>
-                        <li><a class="scroll" href="/profile"><span style="font-size: 30px;color: #0b0b0b">BACK</span></a></li>
+                        <li><a class="scroll" href="/circle"><span
+                                style="font-size: 30px;color: #0b0b0b">CIRCLE</span></a></li>
+                        <li><a class="scroll" href="/profile"><span
+                                style="font-size: 30px;color: #0b0b0b">BACK</span></a></li>
                     </ul>
                 </nav>
             </div>
         </nav>
     </div>
     <!-- //Navigation -->
-
-    <!-- Slider -->
+     <!-- Slider -->
     <div class="slider">
         <ul class="rslides" id="slider">
             <li class="first-slide w3ls">
@@ -101,7 +103,6 @@
         </ul>
     </div>
     <!-- //Slider -->
-
 </div>
 <!-- //Header -->
 
@@ -109,23 +110,22 @@
 <!-- Contact -->
 <div class="agilecontactw3ls" id="agilecontactw3ls">
     <div class="container">
-        <h3>My Dynamic</h3>
+        <h3>Followed</h3>
         {% for line in data %}
-            <div class="col-md-6 agilecontactw3ls-grid agilecontactw3ls-grid-1">
-                <input type="text" Name="author" value="{{ line.author }}" required="" readonly="true"
-                       style="color:white">
-                <input type="text" Name="postData" value="{{ line.postData }}" required="" readonly="true"
-                       style="color:white">
-                <input type="text" Name="likes" value="Likes: {{ line.likes }}" required="" readonly="true"
-                       style="color:white">
-            </div>
-            <div class="col-md-6 agilecontactw3ls-grid agilecontactw3ls-grid-2">
-                <textarea name="content" required="" readonly="true" style="color:white">{{ line.content }}</textarea>
-                <div class="send-button">
+            <form action="/follow/" method="post">
+                <br style="color:red"/>{% csrf_token %}<br/>
+                <div class="col-md-6 agilecontactw3ls-grid agilecontactw3ls-grid-1">
+                    <input type="text" Name="author" value="{{ line.author }}" required="" readonly="true">
                 </div>
-            </div>
-            <div class="clearfix"></div>
+                <div class="col-md-6 agilecontactw3ls-grid agilecontactw3ls-grid-2">
+                    <div class="send-button">
+                        <input type="submit" name="follow" value="Cancel Follow">
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </form>
         {% endfor %}
+
     </div>
 </div>
 <!-- //Contact -->

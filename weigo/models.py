@@ -82,3 +82,8 @@ class WeiboData(models.Model):
 class WeiboLike(models.Model):
     num = models.IntegerField()
     liker = models.CharField(max_length=100)
+
+
+class Follow(models.Model):
+    author = models.CharField(max_length=100)
+    follower = models.CharField(max_length=100)

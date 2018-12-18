@@ -17,7 +17,7 @@
 <!-- Index-Page-CSS -->	  <link rel="stylesheet" href="/static/css/style5.css"		  type="text/css" media="all">
 
 
-		
+
 </head>
 <!-- //Head -->
 
@@ -114,6 +114,7 @@
                 <form action="/circle.html/" method="post">
                  <br style="color:red"/>{% csrf_token %}<br />
 				<div class="col-md-6 agilecontactw3ls-grid agilecontactw3ls-grid-1">
+					<input type="hidden" Name="num" value="{{ line.num }}" required="" readonly="true" style="color:white">
 					<input type="text" Name="author" value="{{ line.author }}" required="" readonly="true" style="color:white">
 					<input type="text" Name="postData" value="{{ line.postData }}" required="" readonly="true" style="color:white">
                     <input type="text" Name="likes" value="Likes: {{ line.likes }}" required="" readonly="true" style="color:white">
@@ -121,7 +122,8 @@
 				<div class="col-md-6 agilecontactw3ls-grid agilecontactw3ls-grid-2">
 					<textarea name="content"  required="" readonly="true" style="color:white">{{ line.content }}</textarea>
                     <div class="send-button">
-						<input type="submit" value="Like">
+						<input type="submit" name="like" value="Like">
+                        <input type="submit" name="follow" value="Follow">
 					</div>
 				</div>
 				<div class="clearfix"></div>

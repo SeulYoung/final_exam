@@ -1,7 +1,6 @@
 import re
 
 from django import forms
-from django.contrib.auth.models import User
 from django.db.models import Q
 
 from weigo.models import MyUser
@@ -20,13 +19,13 @@ def username_check(username):
 class RegistrationForm(forms.Form):
     username = forms.CharField(label='Username', max_length=100)
     email = forms.EmailField(label='Email', max_length=100)
-    password1 = forms.CharField(label='Password1', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Password2', widget=forms.PasswordInput)
+    password = forms.CharField(label='Password', widget=forms.PasswordInput)
+    password_confirmation = forms.CharField(label='PasswordConfirmation', widget=forms.PasswordInput)
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if email_check(email):
-            filter_result = User.objects.filter(email=email)
+            filter_result = MyUser.objects.filter(email=email)
             if len(filter_result) > 0:
                 raise forms.ValidationError('Email already taken.')
         else:
@@ -36,7 +35,7 @@ class RegistrationForm(forms.Form):
     def clean_username(self):
         username = self.cleaned_data.get('username')
         if username_check(username):
-            filter_result = User.objects.filter(username=username)
+            filter_result = MyUser.objects.filter(username=username)
             if len(filter_result) > 0:
                 raise forms.ValidationError('Username already taken.')
         else:
@@ -44,7 +43,7 @@ class RegistrationForm(forms.Form):
         return username
 
     def clean_password1(self):
-        password1 = self.cleaned_data.get('password1')
+        password1 = self.cleaned_data.get('password')
         if len(password1) < 6:
             raise forms.ValidationError('Password too short.')
         elif len(password1) > 50:
@@ -52,8 +51,8 @@ class RegistrationForm(forms.Form):
         return password1
 
     def clean_password2(self):
-        password1 = self.cleaned_data.get('password1')
-        password2 = self.cleaned_data.get('password2')
+        password1 = self.cleaned_data.get('password')
+        password2 = self.cleaned_data.get('password_confirmation')
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError('Password mismatch.')
         return password2
@@ -77,7 +76,7 @@ class EmailForm(forms.Form):
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if email_check(email):
-            filter_result = User.objects.filter(email=email)
+            filter_result = MyUser.objects.filter(email=email)
             if len(filter_result) > 0:
                 raise forms.ValidationError('Email already taken.')
         else:
@@ -87,11 +86,11 @@ class EmailForm(forms.Form):
 
 class PasswordForm(forms.Form):
     old_password = forms.CharField(label='OldPassword', widget=forms.PasswordInput)
-    password1 = forms.CharField(label='Password1', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Password2', widget=forms.PasswordInput)
+    password = forms.CharField(label='Password', widget=forms.PasswordInput)
+    password_confirmation = forms.CharField(label='PasswordConfirmation', widget=forms.PasswordInput)
 
     def clean_password1(self):
-        password1 = self.cleaned_data.get('password1')
+        password1 = self.cleaned_data.get('password')
         if len(password1) < 6:
             raise forms.ValidationError('Password too short.')
         elif len(password1) > 50:
@@ -99,8 +98,8 @@ class PasswordForm(forms.Form):
         return password1
 
     def clean_password2(self):
-        password1 = self.cleaned_data.get('password1')
-        password2 = self.cleaned_data.get('password2')
+        password1 = self.cleaned_data.get('password')
+        password2 = self.cleaned_data.get('password_confirmation')
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError('Password mismatch.')
         return password2

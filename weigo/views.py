@@ -52,7 +52,7 @@ def registration(request):
         if form.is_valid():
             email = form.cleaned_data['email']
             username = form.cleaned_data['username']
-            password = form.cleaned_data['password2']
+            password = form.cleaned_data['password']
             MyUser.objects.create_user(email=email, username=username, password=password)
             return redirect('/login.html')
     else:
@@ -86,17 +86,36 @@ def circle(request):
     if not request.user.is_authenticated:
         return redirect('/login.html')
     if request.method == "POST":
-        num = request.POST.get('num')
-        result = models.WeiboLike.objects.filter(num=num, liker=request.user.username)
-        if not result:
-            models.WeiboLike.objects.create(num=num, liker=request.user.username)
-            models.WeiboData.objects.filter(num=num).update(likes=F('likes') + 1)
-        else:
-            models.WeiboLike.objects.filter(num=num, liker=request.user.username).delete()
-            models.WeiboData.objects.filter(num=num).update(likes=F('likes') - 1)
+        if 'like' in request.POST:
+            num = request.POST.get('num')
+            result = models.WeiboLike.objects.get_or_create(num=num, liker=request.user.username)
+            if result[1]:
+                models.WeiboData.objects.filter(num=num).update(likes=F('likes') + 1)
+            else:
+                result[0].delete()
+                models.WeiboData.objects.filter(num=num).update(likes=F('likes') - 1)
+        elif 'follow' in request.POST:
+            author = request.POST.get('author')
+            result = models.Follow.objects.get_or_create(author=author, follower=request.user.username)
+            if not result[1]:
+                result[0].delete()
 
     data_list = models.WeiboData.objects.all().order_by('-postData')
     return render(request, 'circle.html', {'data': data_list})
+
+
+def follower(request):
+    if not request.user.is_authenticated:
+        return redirect('/login.html')
+    data_list = models.Follow.objects.filter(author=request.user.username)
+    return render(request, 'follower.html', {'data': data_list})
+
+
+def following(request):
+    if not request.user.is_authenticated:
+        return redirect('/login.html')
+    data_list = models.WeiboData.objects.filter(follower=request.user.username).order_by('-postData')
+    return render(request, 'following.html', {'data': data_list})
 
 
 def profile(request):
@@ -128,7 +147,7 @@ def password_update(request):
         form = PasswordForm(request.POST)
         if form.is_valid():
             old_password = form.cleaned_data['old_password']
-            password = form.cleaned_data['password2']
+            password = form.cleaned_data['password']
 
             if request.user.check_password(old_password):
                 request.user.set_password(password)

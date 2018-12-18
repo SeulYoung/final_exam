@@ -89,7 +89,11 @@ def circle(request):
         num = request.POST.get('num')
         result = models.WeiboLike.objects.filter(num=num, liker=request.user.username)
         if not result:
+            models.WeiboLike.objects.create(num=num, liker=request.user.username)
             models.WeiboData.objects.filter(num=num).update(likes=F('likes') + 1)
+        else:
+            models.WeiboLike.objects.filter(num=num, liker=request.user.username).delete()
+            models.WeiboData.objects.filter(num=num).update(likes=F('likes') - 1)
 
     data_list = models.WeiboData.objects.all().order_by('-postData')
     return render(request, 'circle.html', {'data': data_list})

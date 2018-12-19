@@ -131,20 +131,17 @@ def circle(request):
 def follower(request):
     if not request.user.is_authenticated:
         return redirect('/login')
-    data_list = models.Follow.objects.filter(follower=request.user.username)
+    data_list = models.Follow.objects.filter(author=request.user.username)
     return render(request, 'following.html', {'data': data_list})
 
 
 def following(request):
     if not request.user.is_authenticated:
         return redirect('/login')
-
     if request.method == 'POST':
         author = request.POST.get('author')
-        result = models.Follow.objects.get_or_create(author=author, follower=request.user.username)
-        if not result[1]:
-            result[0].delete()
-    data_list = models.WeiboData.objects.filter(follower=request.user.username).order_by('-postData')
+        models.Follow.objects.filter(author=author, follower=request.user.username).delete()
+    data_list = models.Follow.objects.filter(follower=request.user.username)
     return render(request, 'following.html', {'data': data_list})
 
 

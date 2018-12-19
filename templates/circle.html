@@ -24,6 +24,8 @@
     <!-- Index-Page-CSS -->
     <link rel="stylesheet" href="/static/css/style5.css" type="text/css" media="all">
 
+  <link rel="stylesheet" href="/static/css/layui.css">
+    <link rel="stylesheet" href="/static/css/index.css">
 
 </head>
 <!-- //Head -->
@@ -31,10 +33,16 @@
 
 <!-- Body -->
 <body>
-
+ <div class="nav-list">
+        <button>
+          <span></span><span></span><span></span>
+        </button>
+        <ul class="layui-nav" lay-filter="">
+        </ul>
+      </div>
 
 <!-- Header -->
-<div class="agileheader" id="agileitshome">
+<div class="agileheader" id="agileitshome" style="height: 0px">
 
     <!-- Navigation -->
     <div class="w3lsnavigation">
@@ -73,33 +81,13 @@
     <div class="slider">
         <ul class="rslides" id="slider">
             <li class="first-slide w3ls">
-                <img src="/static/img/slide-1.jpg" alt="Odyssey">
                 <div class="wthreexperience">
                     <div id="animated-example" class="animated fadeIn"></div>
                     <button onclick="myFunction()">Reload page</button>
                 </div>
             </li>
-            <li class="second-slide aits">
-                <img src="/static/img/slide-2.jpg" alt="Odyssey">
-                <div class="wthreexperience">
-                    <div id="animated-example1" class="animated fadeIn"></div>
-                    <button onclick="myFunction()">Reload page</button>
-                </div>
-            </li>
-            <li class="third-slide w3-agileits">
-                <img src="/static/img/slide-3.jpg" alt="Odyssey">
-                <div class="wthreexperience">
-                    <div id="animated-example2" class="animated fadeIn"></div>
-                    <button onclick="myFunction()">Reload page</button>
-                </div>
-            </li>
-            <li class="fourth-slide agileinfo">
-                <img src="/static/img/slide-4.jpg" alt="Odyssey">
-                <div class="wthreexperience">
-                    <div id="animated-example3" class="animated fadeIn"></div>
-                    <button onclick="myFunction()">Reload page</button>
-                </div>
-            </li>
+
+
 
         </ul>
     </div>
@@ -110,7 +98,7 @@
 
 
 <!-- Contact -->
-<div class="agilecontactw3ls" id="agilecontactw3ls">
+<div class="agilecontactw3ls" id="agilecontactw3ls" >
     <div class="container">
         <h3>Circle</h3>
         {% for line in data %}

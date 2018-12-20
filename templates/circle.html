@@ -129,13 +129,14 @@
                             {% else %}
                                 <input type="submit" name="follow" value="Followed" style="color: orangered">
                             {% endif %}
+                        {% else %}
+                            <input type="submit" name="delete" value="Delete">
                         {% endif %}
                     </div>
                 </div>
                 <div class="clearfix"></div>
             </form>
         {% endfor %}
-
     </div>
 </div>
 <!-- //Contact -->

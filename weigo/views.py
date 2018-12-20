@@ -90,6 +90,10 @@ def dynamic(request):
 def myDynamic(request):
     if not request.user.is_authenticated:
         return redirect('/login')
+    if request.method == "POST":
+        num = request.POST.get('num')
+        models.WeiboData.objects.filter(num=num).delete()
+        models.WeiboLike.objects.filter(num=num).delete()
     data_list = models.WeiboData.objects.filter(author=request.user.username).order_by('-postData')
     return render(request, 'myDynamic.html', {'data': data_list})
 
@@ -111,6 +115,10 @@ def circle(request):
             result = models.Follow.objects.get_or_create(author=author, follower=request.user.username)
             if not result[1]:
                 result[0].delete()
+        elif 'delete' in request.POST:
+            num = request.POST.get('num')
+            models.WeiboData.objects.filter(num=num).delete()
+            models.WeiboLike.objects.filter(num=num).delete()
 
     data_list = models.WeiboData.objects.all().order_by('-postData')
     data = []
@@ -131,21 +139,39 @@ def circle(request):
 def follower(request):
     if not request.user.is_authenticated:
         return redirect('/login')
-    data_list = models.Follow.objects.filter(follower=request.user.username)
+    data_list = models.Follow.objects.filter(author=request.user.username)
     return render(request, 'following.html', {'data': data_list})
 
 
 def following(request):
     if not request.user.is_authenticated:
         return redirect('/login')
-
     if request.method == 'POST':
-        author = request.POST.get('author')
-        result = models.Follow.objects.get_or_create(author=author, follower=request.user.username)
-        if not result[1]:
-            result[0].delete()
-    data_list = models.WeiboData.objects.filter(follower=request.user.username).order_by('-postData')
-    return render(request, 'following.html', {'data': data_list})
+        if 'like' in request.POST:
+            num = request.POST.get('num')
+            result = models.WeiboLike.objects.get_or_create(num=num, liker=request.user.username)
+            if result[1]:
+                models.WeiboData.objects.filter(num=num).update(likes=F('likes') + 1)
+            else:
+                result[0].delete()
+                models.WeiboData.objects.filter(num=num).update(likes=F('likes') - 1)
+        elif 'follow' in request.POST:
+            author = request.POST.get('author')
+            models.Follow.objects.filter(author=author, follower=request.user.username).delete()
+
+    follow_list = models.Follow.objects.filter(follower=request.user.username)
+    data = []
+    for f in follow_list:
+        data_list = models.WeiboData.objects.filter(author=f.author).order_by('-postData')
+        for k in data_list:
+            temp = k.__dict__
+            temp['judge'] = 0
+            judge = models.WeiboLike.objects.filter(Q(num=k.num) & Q(liker=request.user.username))
+            if judge:
+                temp['judge'] = 1
+            data.append(temp)
+
+    return render(request, 'following.html', {'follow_list': follow_list, 'data': data})
 
 
 def profile(request):

@@ -15,7 +15,8 @@
 
 <!-- Bootstrap-CSS -->	  <link rel="stylesheet" href="/static/css/bootstrap5.css" type="text/css" media="all">
 <!-- Index-Page-CSS -->	  <link rel="stylesheet" href="/static/css/style5.css"		  type="text/css" media="all">
-
+    <link rel="stylesheet" href="/static/css/layui.css">
+    <link rel="stylesheet" href="/static/css/index.css">
 
 		
 </head>
@@ -26,10 +27,16 @@
 <!-- Body -->
 <body>
 
-
+       <div class="nav-list">
+        <button>
+          <span></span><span></span><span></span>
+        </button>
+        <ul class="layui-nav" lay-filter="">
+        </ul>
+      </div>
 
 	<!-- Header -->
-	<div class="agileheader" id="agileitshome">
+	<div class="agileheader" id="agileitshome" style="height: 0px">
 
 		<!-- Navigation -->
 		<div class="w3lsnavigation">
@@ -43,6 +50,7 @@
 					</button>
 
 				</div>
+
 
 				<div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
 					<nav class="link-effect-2" id="link-effect-2">
@@ -59,41 +67,21 @@
 		</div>
 		<!-- //Navigation -->
 
-		<!-- Slider -->
-		<div class="slider">
-			<ul class="rslides" id="slider">
-				<li class="first-slide w3ls">
-					<img src="/static/img/slide-1.jpg" alt="Odyssey">
-					<div class="wthreexperience">
-						<div id="animated-example" class="animated fadeIn"></div>
-						<button onclick="myFunction()">Reload page</button>
-					</div>
-				</li>
-				<li class="second-slide aits">
-					<img src="/static/img/slide-2.jpg" alt="Odyssey">
-					<div class="wthreexperience">
-						<div id="animated-example1" class="animated fadeIn"></div>
-						<button onclick="myFunction()">Reload page</button>
-					</div>
-				</li>
-				<li class="third-slide w3-agileits">
-					<img src="/static/img/slide-3.jpg" alt="Odyssey">
-					<div class="wthreexperience">
-						<div id="animated-example2" class="animated fadeIn"></div>
-						<button onclick="myFunction()">Reload page</button>
-					</div>
-				</li>
-				<li class="fourth-slide agileinfo">
-					<img src="/static/img/slide-4.jpg" alt="Odyssey">
-					<div class="wthreexperience">
-						<div id="animated-example3" class="animated fadeIn"></div>
-						<button onclick="myFunction()">Reload page</button>
-					</div>
-				</li>
+<!-- Slider -->
+    <div class="slider">
+        <ul class="rslides" id="slider">
+            <li class="first-slide w3ls">
+                <div class="wthreexperience">
+                    <div id="animated-example" class="animated fadeIn"></div>
+                    <button onclick="myFunction()">Reload page</button>
+                </div>
+            </li>
 
-			</ul>
-		</div>
-		<!-- //Slider -->
+
+
+        </ul>
+    </div>
+    <!-- //Slider -->
 
 	</div>
 	<!-- //Header -->
@@ -104,8 +92,8 @@
 
 
 	<!-- Contact -->
-	<div class="agilecontactw3ls" id="agilecontactw3ls">
-		<div class="container">
+	<div class="agilecontactw3ls" id="agilecontactw3ls" style="height:642px;">
+		<div class="container" >
 			<h3>Send Dynamic</h3>
 			<form action="/dynamic/" method="post">
                  <br style="color:red"/>{% csrf_token %}<br />

@@ -12,5 +12,5 @@ urlpatterns = [
     path('dynamic/', views.dynamic, name='dynamic'),
     path('myDynamic/', views.myDynamic, name='myDynamic'),
     path('circle/', views.circle, name='circle'),
-    path('follow/', views.follower, name='follow'),
+    path('follow/', views.following, name='follow'),
 ]

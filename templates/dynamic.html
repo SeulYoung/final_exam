@@ -12,12 +12,10 @@
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- //Meta-Tags -->
 
-
 <!-- Bootstrap-CSS -->
     <link rel="stylesheet" href="/static/css/bootstrap5.css" type="text/css" media="all">
 <!-- Index-Page-CSS -->
-    <link rel="stylesheet" href="/static/css/style5.css"		  type="text/css" media="all">
-		
+    <link rel="stylesheet" href="/static/css/style5.css" type="text/css" media="all">
 </head>
 <!-- //Head -->
 
@@ -66,7 +64,8 @@
 				<div class="col-md-6 agilecontactw3ls-grid agilecontactw3ls-grid-1">
 					<input type="text" Name="author" value="{{ username }}" required="" readonly="true" style="color:white">
 					<input type="text" Name="email" value="{{ email }}" required="" readonly="true" style="color:white">
-					<input type="checkbox" Name="private" value="Private" style="color:white; width: 18px; height: 18px; font-size: large">Private<br />
+					<input type="checkbox" Name="private" value="Private" style="color:white; vertical-align: text-bottom; width: 16px; height: 16px;">
+					<span class="status" style="color:white; vertical-align: middle; font-size: 16px">Private</span>
 				</div>
 				<div class="col-md-6 agilecontactw3ls-grid agilecontactw3ls-grid-2">
 					<textarea name="content" placeholder="CONTENT" required></textarea>

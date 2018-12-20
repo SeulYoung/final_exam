@@ -67,8 +67,11 @@ def dynamic(request):
     if request.method == "POST":
         author = request.POST.get('author')
         content = request.POST.get('content')
-        models.WeiboData.objects.create(author=author, content=content)
-        data_list = models.WeiboData.objects.all().order_by('-postData')
+        if 'private' in request.POST:
+            models.WeiboData.objects.create(author=author, content=content, private=True)
+        else:
+            models.WeiboData.objects.create(author=author, content=content)
+        data_list = models.WeiboData.objects.filter(private=False).order_by('-postData')
         data = []
         for k in data_list:
             temp = k.__dict__
@@ -120,7 +123,7 @@ def circle(request):
             models.WeiboData.objects.filter(num=num).delete()
             models.WeiboLike.objects.filter(num=num).delete()
 
-    data_list = models.WeiboData.objects.all().order_by('-postData')
+    data_list = models.WeiboData.objects.filter(private=False).order_by('-postData')
     data = []
     for k in data_list:
         temp = k.__dict__
@@ -162,7 +165,7 @@ def following(request):
     follow_list = models.Follow.objects.filter(follower=request.user.username)
     data = []
     for f in follow_list:
-        data_list = models.WeiboData.objects.filter(author=f.author).order_by('-postData')
+        data_list = models.WeiboData.objects.filter(author=f.author, private=False).order_by('-postData')
         for k in data_list:
             temp = k.__dict__
             temp['judge'] = 0

@@ -77,6 +77,7 @@ class WeiboData(models.Model):
     content = models.CharField(max_length=300)
     likes = models.IntegerField(default=0)
     postData = models.DateTimeField(auto_now_add=True)
+    private = models.BooleanField(default=False)
 
 
 class WeiboLike(models.Model):

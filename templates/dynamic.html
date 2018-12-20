@@ -13,27 +13,17 @@
 <!-- //Meta-Tags -->
 
 
-<!-- Bootstrap-CSS -->	  <link rel="stylesheet" href="/static/css/bootstrap5.css" type="text/css" media="all">
-<!-- Index-Page-CSS -->	  <link rel="stylesheet" href="/static/css/style5.css"		  type="text/css" media="all">
-    <link rel="stylesheet" href="/static/css/layui.css">
-    <link rel="stylesheet" href="/static/css/index.css">
-
+<!-- Bootstrap-CSS -->
+    <link rel="stylesheet" href="/static/css/bootstrap5.css" type="text/css" media="all">
+<!-- Index-Page-CSS -->
+    <link rel="stylesheet" href="/static/css/style5.css"		  type="text/css" media="all">
 		
 </head>
 <!-- //Head -->
 
 
-
 <!-- Body -->
 <body>
-
-       <div class="nav-list">
-        <button>
-          <span></span><span></span><span></span>
-        </button>
-        <ul class="layui-nav" lay-filter="">
-        </ul>
-      </div>
 
 	<!-- Header -->
 	<div class="agileheader" id="agileitshome" style="height: 0px">
@@ -67,32 +57,11 @@
 		</div>
 		<!-- //Navigation -->
 
-<!-- Slider -->
-    <div class="slider">
-        <ul class="rslides" id="slider">
-            <li class="first-slide w3ls">
-                <div class="wthreexperience">
-                    <div id="animated-example" class="animated fadeIn"></div>
-                    <button onclick="myFunction()">Reload page</button>
-                </div>
-            </li>
-
-
-
-        </ul>
-    </div>
-    <!-- //Slider -->
-
 	</div>
 	<!-- //Header -->
 
-
-
-
-
-
 	<!-- Contact -->
-	<div class="agilecontactw3ls" id="agilecontactw3ls" style="height:642px;">
+	<div class="agilecontactw3ls" id="agilecontactw3ls" >
 		<div class="container" >
 			<h3>Send Dynamic</h3>
 			<form action="/dynamic/" method="post">
@@ -100,8 +69,6 @@
 				<div class="col-md-6 agilecontactw3ls-grid agilecontactw3ls-grid-1">
 					<input type="text" Name="author" value="{{ username }}" required="" readonly="true" style="color:white">
 					<input type="text" Name="email" value="{{ email }}" required="" readonly="true" style="color:white">
-
-{#					<input type="email" Name="Email" placeholder="EMAIL" required="">#}
 				</div>
 				<div class="col-md-6 agilecontactw3ls-grid agilecontactw3ls-grid-2">
 					<textarea name="content" placeholder="CONTENT" required></textarea>

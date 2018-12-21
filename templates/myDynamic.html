@@ -81,9 +81,14 @@
             {% csrf_token %}
             <div class="col-md-6 agilecontactw3ls-grid agilecontactw3ls-grid-1">
                 <input type="hidden" Name="num" value="{{ line.num }}" required="" readonly="true"
+                    style="color:white">
+                {% if line.private == True %}
+                    <input type="text" Name="author" value="{{ line.author }} (Private)" required="" readonly="true"
                         style="color:white">
-                <input type="text" Name="author" value="{{ line.author }}" required="" readonly="true"
-                       style="color:white">
+                {% else %}
+                    <input type="text" Name="author" value="{{ line.author }}" required="" readonly="true"
+                        style="color:white">
+                {% endif %}
                 <input type="text" Name="postData" value="{{ line.postData }}" required="" readonly="true"
                        style="color:white">
                 <input type="text" Name="likes" value="Likes: {{ line.likes }}" required="" readonly="true"

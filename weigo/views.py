@@ -193,7 +193,7 @@ def email_update(request):
         if form.is_valid():
             email = form.cleaned_data['email']
             MyUser.objects.filter(email=request.user.email).update(email=email)
-            return redirect('/login.html')
+            return redirect('/login')
     else:
         form = RegistrationForm()
     return render(request, 'emailUpdate.html', {'form': form})
@@ -211,7 +211,7 @@ def password_update(request):
             if request.user.check_password(old_password):
                 request.user.set_password(password)
                 request.user.save()
-                return redirect('/login.html')
+                return redirect('/login')
             else:
                 form.add_error('password', 'Invalid password.')
     else:
